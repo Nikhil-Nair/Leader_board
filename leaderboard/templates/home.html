@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <table class="table table-striped table-bordered">
+    <thead>
+      <tr>
+        <th class="text-center">Name</th>
+        <th class="text-center">Score</th>
+      </tr>
+    </thead>
+    <tbody>
+          {% for score in object_list %}
+            <tr>
+              <div class="score-entry">
+                <td class="text-center"><a href="{% url 'score_detail' score.name %}">{{ score.name }}</a></td>
+                <td class="text-center">{{ score.player_score }}</td>
+              </div>
+            </tr>
+          {% endfor %}
+    </tbody>
+  </table>
+  <h3 class="text-center">Click on name to update,delete scores.</h3>
+
+{% endblock content %}

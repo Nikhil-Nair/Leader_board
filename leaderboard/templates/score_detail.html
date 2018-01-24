@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<center>
+  <table class="table table-striped">
+    <tr>
+    <td><h2 class="text-center">{{ object.name }}</h2></td>
+    <td><h2 class="text-center">{{ object.player_score }}</h2></td>
+    </tr>
+    <tr>
+      <td class="text-center"><a href="{% url 'score_update' score.pk %}" class="btn btn-primary">Edit Score</a></td>
+      <td class="text-center"><a href="{% url 'score_delete' score.pk %}" class="btn btn-warning">Remove Player Score</a></td>
+    </tr>
+  </table>
+</center>
+{% endblock content %}
