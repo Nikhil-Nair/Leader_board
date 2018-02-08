@@ -1,11 +1,14 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 
+
 from .models import Score
+from .forms import AddScoreForm
+
 
 class ScoreListView(ListView):
     model = Score
@@ -14,11 +17,6 @@ class ScoreListView(ListView):
 class ScoreDetailView(DetailView):
     model = Score
     template_name = 'score_detail.html'
-
-class ScoreCreateView(CreateView):
-    model = Score
-    template_name = 'new_score.html'
-    fields = '__all__'
 
 class ScoreUpdateView(UpdateView):
     model = Score
@@ -29,6 +27,15 @@ class ScoreDeleteView(DeleteView):
     model = Score
     template_name = 'score_delete.html'
     success_url = reverse_lazy('home')
+
+def scoreCreateView(request):
+    form = AddScoreForm(request.POST)
+    if form.is_valid():
+        temp = form.save(commit=False)
+        temp.score_admin = request.user
+        temp.save()
+        return redirect('/')
+    return render(request, 'new_score.html', {'form' : form,})
 
 
 def scoreAdminListView(request, queryset=None):
