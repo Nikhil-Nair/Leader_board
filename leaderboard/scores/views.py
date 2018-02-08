@@ -29,3 +29,11 @@ class ScoreDeleteView(DeleteView):
     model = Score
     template_name = 'score_delete.html'
     success_url = reverse_lazy('home')
+
+
+def scoreAdminListView(request, queryset=None):
+    object_list = Score.objects.filter(score_admin=request.user)
+    context = {
+        "object_list" : object_list
+    }
+    return render(request, 'score_admin_view.html', context)
